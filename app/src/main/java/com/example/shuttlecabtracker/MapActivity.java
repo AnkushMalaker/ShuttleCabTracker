@@ -1,17 +1,13 @@
-package com.example.dsaproject;
+package com.example.shuttlecabtracker;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.location.*;
 
+import com.example.dsaproject.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.*;
@@ -19,23 +15,12 @@ import com.google.android.gms.maps.model.*;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.*;
 
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
 import java.util.*;
-import android.os.Bundle;
-import android.content.Context;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 
 public class MapActivity extends AppCompatActivity  implements TaskLoadedCallback {
