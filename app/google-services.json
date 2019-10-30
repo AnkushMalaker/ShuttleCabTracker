@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:400681158352:android:28795f7f889d4ee3f380d5",
         "android_client_info": {
-          "package_name": "com.example.driverapp"
+          "package_name": "com.example.shuttlecabtracker"
         }
       },
       "oauth_client": [

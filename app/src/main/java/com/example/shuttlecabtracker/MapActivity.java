@@ -3,8 +3,8 @@ package com.example.shuttlecabtracker;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.location.*;
 
 import com.example.dsaproject.R;
@@ -90,8 +90,11 @@ public class MapActivity extends AppCompatActivity  implements TaskLoadedCallbac
                                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                         shuttleCabs shuttleCab = snapshot.getValue(shuttleCabs.class);
                                         LatLng shuttle = new LatLng(shuttleCab.getCabx(),shuttleCab.getCaby() );
-                                        if (shuttleCab.getCabpax()>=13) continue;
-                                        else cabLocs.add(shuttle);
+                                        if (shuttleCab.getType()==0){
+                                            if (shuttleCab.getFull()==0){
+                                                cabLocs.add(shuttle);
+                                            }
+                                        }
                                     }
                                     closestCab = findClosest(cabLocs);
                                     map.addMarker(new MarkerOptions().position(closestCab).title("Closest Shuttle"));
@@ -202,7 +205,6 @@ public class MapActivity extends AppCompatActivity  implements TaskLoadedCallbac
         mapView.onLowMemory();
         super.onLowMemory();
     }
-
 
     @Override
     public void onTaskDone(Object... values) {

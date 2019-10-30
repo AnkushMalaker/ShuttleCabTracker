@@ -4,17 +4,18 @@ public class shuttleCabs {
     String cabID;
     double cabx;
     double caby;
-    int cabpax;
-
+    int full;
+    int type;
     public shuttleCabs(){
 
     }
 
-    public shuttleCabs(String cabID, double cabx, double caby, int cabpax) {
+    public shuttleCabs(String cabID, double cabx, double caby,int full, int type) {
         this.cabID = cabID;
         this.cabx = cabx;
         this.caby = caby;
-        this.cabpax = cabpax;
+        this.full = full;
+        this.type = type;
     }
 
     public String getCabID() {
@@ -29,7 +30,9 @@ public class shuttleCabs {
         return caby;
     }
 
-    public int getCabpax() {
-        return cabpax;
+    public int getType() {
+        return type;
     }
+
+    public int getFull(){return full;}
 }
