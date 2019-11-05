@@ -1,6 +1,7 @@
 package com.example.shuttlecabtracker;
 
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import androidx.core.app.ActivityCompat;
@@ -17,6 +18,7 @@ import com.google.firebase.database.*;
 
 import java.util.*;
 
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -32,10 +34,14 @@ public class MapActivity extends AppCompatActivity  implements TaskLoadedCallbac
     LatLng closestCab;
     Polyline currentPolyline;
     TextView timeLeft;
+    String id;
+    SharedPreferences sharedPreferences;
     private FusedLocationProviderClient fusedLocationClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sharedPreferences = getPreferences(MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
         timeLeft = findViewById(R.id.timeText);
@@ -108,7 +114,6 @@ public class MapActivity extends AppCompatActivity  implements TaskLoadedCallbac
                                     String timeleft = "Nearest cab ETA: " + Integer.toString((int)publicLocation.distanceTo(dest)/300)+ " minutes";
                                     timeLeft.setText(timeleft);
 
-                                    Toast.makeText(MapActivity.this, "Got till here", Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override
@@ -119,10 +124,45 @@ public class MapActivity extends AppCompatActivity  implements TaskLoadedCallbac
             }
 
         });
-
+        final Handler handler = new Handler();
+        final int delay = 10000; //milliseconds
+        handler.postDelayed(new Runnable(){
+            public void run(){
+                updateLocation();
+                sendLocation();
+                handler.postDelayed(this, delay);
+            }
+        }, delay);
     }
+    public void updateLocation(){
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
 
-
+                        }
+                        publicLocation=location;
+                    }
+                });
+    }
+    public void sendLocation(){
+        if (sharedPreferences.getBoolean("firstrun", true)){
+            id = shuttledb.push().getKey();
+            sharedPreferences.edit().putBoolean("firstrun", false).apply();
+            sharedPreferences.edit().putString("myID", id).apply();
+        }
+        else{
+            id = sharedPreferences.getString("myID", "null");
+        }
+        double x = publicLocation.getLatitude();
+        double y = publicLocation.getLongitude();
+        shuttleCabs shuttleCab = new shuttleCabs(id,x,y,0, 1);
+        shuttledb.child(id).setValue(shuttleCab);
+        Toast.makeText(this, "Record updated", Toast.LENGTH_SHORT).show();
+    }
 
     private String getDirectionsUrl(LatLng origin,LatLng dest){
 

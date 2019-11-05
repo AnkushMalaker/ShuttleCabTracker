@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         registrationNo = regNoEditText.getText().toString();
         phoneNo = phoneNoEditText.getText().toString();
 
-
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
