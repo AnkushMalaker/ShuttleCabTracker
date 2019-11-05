@@ -1,4 +1,4 @@
-package com.example.dsaproject;
+package com.example.hci;
 
 import org.junit.Test;
 

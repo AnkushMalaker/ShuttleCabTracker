@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.dsaproject.R;
+import com.example.hci.R;
 
 public class MainActivity extends AppCompatActivity {
 
